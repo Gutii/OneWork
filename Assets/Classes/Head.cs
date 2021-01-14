@@ -25,10 +25,13 @@ public class Head : MonoBehaviour
 
     private void FixedUpdate()
     {
+        try
+        {
         company.RepLevelUP();
         MoneyHead.text = company.Money.ToString();
         CountWorker.text = company.CountWorker.ToString();
         SliderUpdate(SliderReputation, ChengSliderRep, company.Reputation, company.ReputationMax);
+            if(player!=null)
         if (player.documents != null)
             if (player.documents.Count != 0)
                 SliderUpdate(CompletWork, ChengSliderWork, player.documents[player.documents.Count - 1].GetComponent<Document>().Enumerator, player.documents[player.documents.Count - 1].GetComponent<Document>().Work);
@@ -36,6 +39,12 @@ public class Head : MonoBehaviour
                 SliderUpdate(CompletWork, ChengSliderWork, 0, 0);
         else
             SliderUpdate(CompletWork, ChengSliderWork, 0, 0);
+
+        }
+        catch(System.Exception ex)
+        {
+            Debug.Log(ex);
+        }
     }
 
     public void SliderUpdate(Slider slider, Text text, int cheng, int max)

@@ -8,6 +8,7 @@ public class Document:MonoBehaviour
     public int Reputation = 5;
     public int Work = 30;    
 
+    //public Document(int Money, int re)
 
     public void DoWork(int efficiency)
     {

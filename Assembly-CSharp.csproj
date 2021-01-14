@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{37F3DE21-116F-3F0F-F436-A9BE93090C09}</ProjectGuid>
+    <ProjectGuid>{2E532A7B-3451-A048-354B-A78579810505}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -56,16 +56,18 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Classes\Room.cs" />
+    <Compile Include="Assets\Classes\Room\Room.cs" />
     <Compile Include="Assets\Classes\SaveLoad.cs" />
-    <Compile Include="Assets\Classes\Human\Client.cs" />
+    <Compile Include="Assets\Classes\Room\Client.cs" />
     <Compile Include="Assets\Classes\Human\Human.cs" />
-    <Compile Include="Assets\Classes\SpawnClient.cs" />
+    <Compile Include="Assets\Classes\Room\SpawnClient.cs" />
     <Compile Include="Assets\Classes\Head.cs" />
     <Compile Include="Assets\Classes\Human\Player.cs" />
     <Compile Include="Assets\Classes\Company.cs" />
     <Compile Include="Assets\Classes\Human\Worker.cs" />
     <Compile Include="Assets\Classes\Document.cs" />
+    <Compile Include="Assets\Classes\Position.cs" />
+    <Compile Include="Assets\Classes\WorkGameObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

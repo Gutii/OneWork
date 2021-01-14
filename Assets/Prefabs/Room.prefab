@@ -65,5 +65,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fbdce31c983c3c43b2261a1573605b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tables:
+  - {fileID: 7392784935074804880, guid: 9c5b1a95b0c813143a60ba0338ba1ddb, type: 3}
+  - {fileID: 6835706048342069778, guid: 1f361b8789b1b434ba0df203f292cff3, type: 3}
+  rightTable: {fileID: 0}
+  leftTable: {fileID: 0}
   price: 0
   panelsellroom: {fileID: 8023711887766254694, guid: e6fe5df029c27ae41ae6b50441a327c7, type: 3}

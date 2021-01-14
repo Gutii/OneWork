@@ -16,7 +16,7 @@ public class SaveLoad : MonoBehaviour
     {
         filePath = Application.persistentDataPath + "/save.bit";
         LoadedGame(); 
-        Invoke("SaveGame", 5);        
+       // Invoke("SaveGame", 5);        
     }
 
     private void SaveGame()

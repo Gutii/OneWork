@@ -8,9 +8,7 @@ public class Player : Human
 
     public override bool fatigue { get; set; }
     public override List<GameObject> documents { get; set; } = new List<GameObject>();
-    public override GameObject Table { get { return tableInspector; } set { } }
-
-    public GameObject tableInspector;
+    public override GameObject Table { get; set; }
 
     private void Start()
     {

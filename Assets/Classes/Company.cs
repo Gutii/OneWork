@@ -3,18 +3,21 @@ using UnityEngine;
 
 public class Company : MonoBehaviour
 {
-    public int Money { get; set; } = 40;
+    public int Money { get; set; } = 240;
     public int Reputation { get; set; } = 0;
     public int ReputationMax { get { return ReputationLevel * 60; } set { } }
     public int ReputationLevel { get; set; } = 1;
+    public GameObject Boxes;
     public List<GameObject> rooms;
 
     public Head head;
     //  public int RoomsCount = 1;
 
-    public List<GameObject> workers;
+    public GameObject[] workersPrefab;
+    [HideInInspector] public List<GameObject> workers;
 
     public List<GameObject> Documents;
+  
 
     public int CountWorker
     {
@@ -24,7 +27,6 @@ public class Company : MonoBehaviour
                 return workers.Count;
             return 0;
         }
-        set { }
     }
 
 
@@ -34,21 +36,35 @@ public class Company : MonoBehaviour
         {
             Reputation = 0;
             ReputationLevel++;
-            RoomSell(ReputationLevel);
+            RoomSell();
         }
     }
 
-    public void RoomSell(int reputationLevel)
+    public void RoomSell()
     {
-        GameObject room = GameObject.Find("Room" + reputationLevel);
-        room.GetComponent<Room>().price = 200 * reputationLevel;
+        GameObject room = GameObject.Find("Room" + ReputationLevel);
+        room.GetComponent<Room>().price = 200 * ReputationLevel;
+        room.AddComponent<BoxCollider2D>();
+        room.GetComponent<BoxCollider2D>().size = room.GetComponent<RectTransform>().sizeDelta;
+
+        var box = Instantiate(Boxes);
+        box.transform.SetParent(room.transform);
+        box.transform.localScale = new Vector3(1, 1, 1);
+        box.transform.localPosition = new Vector3(0, -150, 0);       
+
+    }
+
+    public void RoomSell(int reputationlevel)
+    {
+        GameObject room = GameObject.Find("Room" + reputationlevel);
+        room.GetComponent<Room>().price = 200 * reputationlevel;
         room.AddComponent<BoxCollider2D>();
         room.GetComponent<BoxCollider2D>().size = room.GetComponent<RectTransform>().sizeDelta;
     }
-    
+
     private void Start()
     {
-  //      AddRoom("Room1");
+        RoomSell();
     }
 
     public void AddRoom(string name)
@@ -57,17 +73,17 @@ public class Company : MonoBehaviour
         Destroy(rooms[rooms.Count - 1].GetComponent<BoxCollider2D>());
         SpawnClient spawn = rooms[rooms.Count - 1].GetComponent<SpawnClient>();
         spawn.flagSpawn = true;
-      //  spawn.Spawn();
     }
 
     public void Click()
     {
+        if(CountWorker != 0)
         workers[0].GetComponent<Player>().DoWork();
     }
 
     public void HireWorker()
     {
-       // workers.Add(Instantiate();
+      // workers.Add(WorkGameObject.CreateObject();
     }
 
 

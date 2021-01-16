@@ -20,7 +20,7 @@ public class Client : MonoBehaviour
         company = GameObject.Find("Canvas").gameObject.GetComponent<Company>();
         if (company.workers.Count != 0)
         {
-            player = company.workers[0];
+            player = company.workers[0][0];
             currentParent = player.transform.parent;
             currentLocalPsition = player.transform.localPosition;
         }

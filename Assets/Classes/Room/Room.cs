@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class Room : MonoBehaviour
 {
     public GameObject[] Tables;
-    [HideInInspector] public GameObject rightTable;
-    [HideInInspector] public GameObject leftTable;
+    [HideInInspector] public GameObject[] Table;
 
+    [HideInInspector] public int workPlaces = 0;
     private Company company;
     public int price;
     public GameObject panelsellroom;
@@ -56,12 +56,18 @@ public class Room : MonoBehaviour
         {
             company.Money -= price;
             company.AddRoom(name);
-
+            Table = new GameObject[2];
             DestroyChildren(gameObject);
             Destroy(GetComponent<BoxCollider2D>());
-            rightTable = WorkGameObject.CreateObject(Tables, new Vector3(103, -70, -1), transform);
-            leftTable = WorkGameObject.CreateObject(Tables, new Vector3(-103, -70, -1), transform);
-            leftTable.GetComponent<SpriteRenderer>().flipX = true;
+            for (int i = 0; i < 2; i++)
+            {
+                company.workers.Add(new List<GameObject>());
+                Table[i] = i == 0 ? WorkGameObject.CreateObject(Tables, new Vector3(103, -70, -1), transform, 83, 91) :
+                    WorkGameObject.CreateObject(Tables, new Vector3(-103, -70, -1), transform, 83, 91);
+            }
+
+            Table[1].GetComponent<SpriteRenderer>().flipX = true;
+            
         }        
     }
 

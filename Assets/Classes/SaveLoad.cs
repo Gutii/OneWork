@@ -38,7 +38,7 @@ public class SaveLoad : MonoBehaviour
         for (int i = 0; i < company.workers.Count; i++)
         {
             save.documents.Add(new List<Save.Document>());
-            var document = company.workers[i].GetComponent<Human>().documents;
+            var document = company.workers[i][0].GetComponent<Human>().documents;
             for (int j = 0; j < document.Count; j++)
             {
                 save.documents[i].Add( new Save.Document(i,int.Parse(document[j].name.Replace("Document", "").

@@ -13,9 +13,9 @@ public class Company : MonoBehaviour
     public Head head;
     //  public int RoomsCount = 1;
 
+    public GameObject Player;
     public GameObject[] workersPrefab;
-    [HideInInspector] public List<GameObject> workers;
-
+    [HideInInspector] public List<List<GameObject>> workers = new List<List<GameObject>>();
     public List<GameObject> Documents;
   
 
@@ -77,13 +77,33 @@ public class Company : MonoBehaviour
 
     public void Click()
     {
-        if(CountWorker != 0)
-        workers[0].GetComponent<Player>().DoWork();
+       // if(CountWorker != 0)
+        //workers[0].GetComponent<Player>().DoWork();
     }
 
     public void HireWorker()
     {
-      // workers.Add(WorkGameObject.CreateObject();
+      for(int j =0; j<rooms.Count;j++)
+      {
+
+            for(int i = 0; i <workers.Count;i++)
+            {
+                if(workers[i].Count == 0)
+                {
+                    GameObject table = rooms[j].GetComponent<Room>().Table[i % 2];
+                    Vector3 position = table.GetComponent<Position>().positionHuman; 
+                    workers[i].Add(WorkGameObject.CreateObject(workersPrefab, position, rooms[j].transform));
+
+                    if (table.GetComponent<SpriteRenderer>().flipX)
+                    {
+                        workers[i][0].GetComponent<SpriteRenderer>().flipX = true;
+                        position.x = -position.x;
+                        workers[i][0].transform.localPosition = position;
+                    }
+                       
+                }
+            }
+      }
     }
 
 
@@ -105,10 +125,11 @@ public class Company : MonoBehaviour
 
         //получение документов работникам
         for (int j = 0; j < workers.Count; j++)
+            if(workers[j].Count!=0)
             for (int i = 0; i < save.documents[j].Count; i++)
             {
-                workers[j].GetComponent<Human>().AcceptedJob(save.documents[j][i].NumbDocument);
-                workers[j].GetComponent<Human>().documents[i].GetComponent<Document>().Enumerator=save.documents[j][i].Enumirator;
+                workers[j][0].GetComponent<Human>().AcceptedJob(save.documents[j][i].NumbDocument);
+                workers[j][0].GetComponent<Human>().documents[i].GetComponent<Document>().Enumerator=save.documents[j][i].Enumirator;
             }                    
 
     }

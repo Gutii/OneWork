@@ -44,10 +44,7 @@ public class Client : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 gameObject.GetComponent<BoxCollider2D>().enabled = true;
                 yield return new WaitForSeconds(5f);
-                warning = Instantiate(warningPrefab);
-                warning.transform.SetParent(transform);
-                warning.transform.localScale = new Vector3(0.85f, 0.95f, 1f);
-                warning.transform.localPosition = new Vector3(0.42f, 0.75f, 0);
+                warning = WorkGameObject.CreateObject(warningPrefab, new Vector3(0.42f, 0.75f, 0), transform, 0.42f, 0.75f, 1f);
                 warning.GetComponent<SpriteRenderer>().flipX = gameObject.GetComponent<SpriteRenderer>().flipX;
                 yield return new WaitForSeconds(5f);                
                 if(gameObject!=null)                    

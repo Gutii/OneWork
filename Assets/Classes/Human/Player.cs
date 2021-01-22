@@ -15,4 +15,5 @@ public class Player : Human
         company = GameObject.Find("Canvas").GetComponent<Company>();
     }
   
+    
 }

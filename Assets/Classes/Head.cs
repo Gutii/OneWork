@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Head : MonoBehaviour
 {
     private Company company;
-    private Player player;
+    [HideInInspector] public Player player;
 
     [SerializeField] private Text CountWorker;
     [SerializeField] private Text MoneyHead;
@@ -20,7 +20,7 @@ public class Head : MonoBehaviour
     private void Start()
     {
         company = GameObject.FindObjectOfType<Company>();
-        player = GameObject.FindObjectOfType<Player>();
+       // player = GameObject.FindObjectOfType<Player>();
     }
 
     private void FixedUpdate()
@@ -32,7 +32,7 @@ public class Head : MonoBehaviour
         CountWorker.text = company.CountWorker.ToString();
         SliderUpdate(SliderReputation, ChengSliderRep, company.Reputation, company.ReputationMax);
             if(player!=null)
-        if (player.documents != null)
+        if (player.documents.Count != 0)
             if (player.documents.Count != 0)
                 SliderUpdate(CompletWork, ChengSliderWork, player.documents[player.documents.Count - 1].GetComponent<Document>().Enumerator, player.documents[player.documents.Count - 1].GetComponent<Document>().Work);
             else

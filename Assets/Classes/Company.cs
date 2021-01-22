@@ -9,6 +9,7 @@ public class Company : MonoBehaviour
     public int ReputationLevel { get; set; } = 1;
     public GameObject Boxes;
     public List<GameObject> rooms;
+    private int roomFull = 0;
 
     public Head head;
     //  public int RoomsCount = 1;
@@ -17,17 +18,9 @@ public class Company : MonoBehaviour
     public GameObject[] workersPrefab;
     [HideInInspector] public List<List<GameObject>> workers = new List<List<GameObject>>();
     public List<GameObject> Documents;
-  
 
-    public int CountWorker
-    {
-        get
-        {
-            if (workers != null)
-                return workers.Count;
-            return 0;
-        }
-    }
+
+    public int CountWorker { get; set; } = 0;
 
 
     public void RepLevelUP()
@@ -47,10 +40,7 @@ public class Company : MonoBehaviour
         room.AddComponent<BoxCollider2D>();
         room.GetComponent<BoxCollider2D>().size = room.GetComponent<RectTransform>().sizeDelta;
 
-        var box = Instantiate(Boxes);
-        box.transform.SetParent(room.transform);
-        box.transform.localScale = new Vector3(1, 1, 1);
-        box.transform.localPosition = new Vector3(0, -150, 0);       
+        WorkGameObject.CreateObject(Boxes, new Vector3(0, -70, 0),room.transform, 1, 1, 1);
 
     }
 
@@ -72,35 +62,49 @@ public class Company : MonoBehaviour
         rooms.Add(GameObject.Find(name));
         Destroy(rooms[rooms.Count - 1].GetComponent<BoxCollider2D>());
         SpawnClient spawn = rooms[rooms.Count - 1].GetComponent<SpawnClient>();
-        spawn.flagSpawn = true;
+        spawn.flagSpawn = true; 
+        if (workers[0].Count == 0)
+        {
+            workers[0].Add(WorkGameObject.CreateObject(Player, rooms[0].GetComponent<Room>().Table[0].GetComponent<Position>().positionHuman,
+                rooms[0].transform, 84, 87, 1));
+            workers[0][0].GetComponent<Player>().Table = rooms[0].GetComponent<Room>().Table[0];
+            CountWorker++;
+            head.GetComponent<Head>().player = workers[0][0].GetComponent<Player>();
+        }
+           
     }
 
+    
     public void Click()
     {
-       // if(CountWorker != 0)
-        //workers[0].GetComponent<Player>().DoWork();
+        if(workers.Count!=0)
+        if (workers[0].Count != 0)
+            workers[0][0].GetComponent<Player>().DoWork();
     }
 
     public void HireWorker()
     {
-      for(int j =0; j<rooms.Count;j++)
+      if(roomFull<rooms.Count)
       {
 
-            for(int i = 0; i <workers.Count;i++)
+            if(CountWorker < workers.Count)
             {
-                if(workers[i].Count == 0)
+                if(workers[CountWorker].Count == 0)
                 {
-                    GameObject table = rooms[j].GetComponent<Room>().Table[i % 2];
+                    GameObject table = rooms[roomFull].GetComponent<Room>().Table[CountWorker % 2];
+                    
                     Vector3 position = table.GetComponent<Position>().positionHuman; 
-                    workers[i].Add(WorkGameObject.CreateObject(workersPrefab, position, rooms[j].transform));
-
+                    workers[CountWorker].Add(WorkGameObject.CreateObject(workersPrefab, position, rooms[roomFull].transform, 84, 87, 1));
+                    workers[CountWorker][0].GetComponent<Worker>().Table = table;
                     if (table.GetComponent<SpriteRenderer>().flipX)
                     {
-                        workers[i][0].GetComponent<SpriteRenderer>().flipX = true;
+                        workers[CountWorker][0].GetComponent<SpriteRenderer>().flipX = true;
                         position.x = -position.x;
-                        workers[i][0].transform.localPosition = position;
+                        workers[CountWorker][0].transform.localPosition = position;
                     }
-                       
+                    CountWorker++;
+                    if (CountWorker % 2 == 0)
+                        roomFull++;
                 }
             }
       }

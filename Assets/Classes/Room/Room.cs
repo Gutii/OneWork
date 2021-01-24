@@ -21,13 +21,16 @@ public class Room : MonoBehaviour
         company = GameObject.Find("Canvas").GetComponent<Company>();
     }
 
-    
+    private void Update()
+    {
+        
+    }
 
     private void OnMouseDown()
     {
         if (panel == null)
         {
-            WorkGameObject.DestroyChildren(gameObject);
+            DestroyChildren(gameObject);
             panel = Instantiate(panelsellroom);
             var Price = gameObject.transform.Find("Price");
             panel.transform.Find("Buy").gameObject.GetComponent<Button>().onClick.AddListener(BuyRoom);
@@ -41,7 +44,7 @@ public class Room : MonoBehaviour
             panel.transform.Find("Price").gameObject.GetComponent<Text>().text = price.ToString()+"$";
             panel.transform.SetParent(transform);
             panel.transform.localScale = new Vector3(1f,1f,1f);
-            panel.transform.localPosition = new Vector3(0f, 0f, 0f);
+            panel.transform.localPosition = new Vector3(0f, 0f, -1f);
             panel.GetComponent<RectTransform>().sizeDelta = new Vector2(0f,0f);
 
 
@@ -54,7 +57,7 @@ public class Room : MonoBehaviour
         {
             company.Money -= price;            
             Table = new GameObject[2];
-            WorkGameObject.DestroyChildren(gameObject);
+            DestroyChildren(gameObject);
             Destroy(GetComponent<BoxCollider2D>());
             for (int i = 0; i < 2; i++)
             {
@@ -73,10 +76,14 @@ public class Room : MonoBehaviour
 
     public void CancelRoom(BaseEventData data)
     {
-        Destroy(panel);
         WorkGameObject.CreateObject(company.Boxes, new Vector3(0, -70, 0), transform, 1, 1, 1);
+        Destroy(panel);        
     }
 
-   
+    public static void DestroyChildren(GameObject gameObject)
+    {
+        for (int i = 0; i < gameObject.transform.childCount; i++)
+            Destroy(gameObject.transform.GetChild(i).gameObject);
+    }
 
 }

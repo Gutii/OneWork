@@ -56,17 +56,20 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Classes\Room\Room.cs" />
+     <Compile Include="Assets\Classes\Menu\Close.cs" />
      <Compile Include="Assets\Classes\SaveLoad.cs" />
      <Compile Include="Assets\Classes\Room\Client.cs" />
      <Compile Include="Assets\Classes\Human\Human.cs" />
+     <Compile Include="Assets\Classes\Menu\Menu.cs" />
      <Compile Include="Assets\Classes\WorkGameObject.cs" />
      <Compile Include="Assets\Classes\Room\SpawnClient.cs" />
      <Compile Include="Assets\Classes\Head.cs" />
      <Compile Include="Assets\Classes\Human\Player.cs" />
+     <Compile Include="Assets\Classes\Menu\Shop.cs" />
      <Compile Include="Assets\Classes\Company.cs" />
      <Compile Include="Assets\Classes\Human\Worker.cs" />
      <Compile Include="Assets\Classes\Document.cs" />
-     <Compile Include="Assets\Classes\Position.cs" />
+     <Compile Include="Assets\Classes\Room\Position.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/GitHUB/getConsole/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

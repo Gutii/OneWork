@@ -30,6 +30,17 @@ public class WorkGameObject:MonoBehaviour
         return @object;
     }
 
+    public static void CreatePanel(GameObject Prefab)
+    {
+        Vector3 scale = new Vector3(1, 1, 1);
+        GameObject @object = Instantiate(Prefab);
+        var transformT = @object.GetComponent<RectTransform>();
+        transformT.SetParent(GameObject.Find("Canvas").transform);
+        transformT.localScale = new Vector3(1, 1, 1);
+        transformT.sizeDelta = new Vector2();
+        transformT.localPosition = new Vector3(0, 0, -10);
+    }
+
     public static void DestroyChildren(GameObject gameObject)
     {
         for (int i = 0; i < gameObject.transform.childCount; i++)

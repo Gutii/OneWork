@@ -2,13 +2,18 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - Client
+    - Close
     - Company
     - Document
-    - Game
     - Head
+    - Menu
     - Player
+    - Position
     - Room
+    - SaveLoad
+    - Shop
     - SpawnClient
+    - Worker
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
     Unity.2D.Tilemap.Editor.dll:
@@ -124,13 +129,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12172}
     - Class: 114
-      Script: {instanceID: 12262}
+      Script: {instanceID: 12364}
     - Class: 114
-      Script: {instanceID: 12366}
+      Script: {instanceID: 12424}
     - Class: 114
-      Script: {instanceID: 12426}
+      Script: {instanceID: 12634}
     - Class: 114
-      Script: {instanceID: 12636}
+      Script: {instanceID: 13048}
     - Class: 114
       Script: {instanceID: 13050}
     - Class: 114
@@ -148,57 +153,67 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13994}
     - Class: 114
-      Script: {instanceID: 14124}
+      Script: {instanceID: 14094}
     - Class: 114
-      Script: {instanceID: 14398}
+      Script: {instanceID: 14126}
+    - Class: 114
+      Script: {instanceID: 14400}
     - Class: 114
       Script: {instanceID: 14764}
     - Class: 114
-      Script: {instanceID: 14844}
+      Script: {instanceID: 14766}
     - Class: 114
-      Script: {instanceID: 14866}
+      Script: {instanceID: 14846}
     - Class: 114
-      Script: {instanceID: 15004}
+      Script: {instanceID: 14868}
     - Class: 114
-      Script: {instanceID: 15050}
+      Script: {instanceID: 15008}
     - Class: 114
-      Script: {instanceID: 15060}
+      Script: {instanceID: 15054}
     - Class: 114
-      Script: {instanceID: 15246}
+      Script: {instanceID: 15064}
     - Class: 114
-      Script: {instanceID: 15288}
+      Script: {instanceID: 15250}
     - Class: 114
-      Script: {instanceID: 15314}
+      Script: {instanceID: 15292}
     - Class: 114
-      Script: {instanceID: 15436}
+      Script: {instanceID: 15318}
     - Class: 114
-      Script: {instanceID: 15514}
+      Script: {instanceID: 15440}
     - Class: 114
-      Script: {instanceID: 15538}
+      Script: {instanceID: 15500}
     - Class: 114
-      Script: {instanceID: 15646}
+      Script: {instanceID: 15520}
     - Class: 114
-      Script: {instanceID: 15820}
+      Script: {instanceID: 15544}
     - Class: 114
-      Script: {instanceID: 16026}
+      Script: {instanceID: 15602}
     - Class: 114
-      Script: {instanceID: 16076}
+      Script: {instanceID: 15652}
     - Class: 114
-      Script: {instanceID: 16254}
+      Script: {instanceID: 15826}
     - Class: 114
-      Script: {instanceID: 16318}
+      Script: {instanceID: 16032}
     - Class: 114
-      Script: {instanceID: 16322}
+      Script: {instanceID: 16082}
     - Class: 114
-      Script: {instanceID: 16366}
+      Script: {instanceID: 16234}
     - Class: 114
-      Script: {instanceID: 16392}
+      Script: {instanceID: 16262}
     - Class: 114
-      Script: {instanceID: 16432}
+      Script: {instanceID: 16326}
     - Class: 114
-      Script: {instanceID: 16540}
+      Script: {instanceID: 16330}
+    - Class: 114
+      Script: {instanceID: 16374}
+    - Class: 114
+      Script: {instanceID: 16400}
+    - Class: 114
+      Script: {instanceID: 16440}
     - Class: 114
       Script: {instanceID: 16548}
+    - Class: 114
+      Script: {instanceID: 16556}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -316,7 +331,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerPersistentCanvas
   - hash:
       serializedVersion: 2
-      Hash: b5aa99a2c6f4af695a4f0556378ed6f2
+      Hash: 24965fc2fb2fc9382eea5b61e4a9ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Room
@@ -338,12 +353,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: ActivationTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 3993999e56f453090fc1b7d2e27d5966
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Game
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -472,6 +481,12 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Close
+  - hash:
+      serializedVersion: 2
       Hash: aba7b2852ef61d175dd9602e7723d5e5
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -586,7 +601,13 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+      Hash: 1f6ef9948ffdf151230e166b6306e195
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: SaveLoad
+  - hash:
+      serializedVersion: 2
+      Hash: d45672d7e4e93047da84267efcb9d85c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Client
@@ -628,12 +649,6 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerWidget
   - hash:
       serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: Table
-  - hash:
-      serializedVersion: 2
       Hash: 71b711096c6c32621c1d4c02310898b7
     assemblyName: Unity.2D.Animation.Runtime.dll
     namespaceName: UnityEngine.U2D.Animation
@@ -644,6 +659,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering.UI
     className: DebugUIHandlerFoldout
+  - hash:
+      serializedVersion: 2
+      Hash: d4e92d736fb4ddab25050d68268186c9
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Menu
   - hash:
       serializedVersion: 2
       Hash: f7bb6096199e0cf058d5d69878184cf4
@@ -700,6 +721,12 @@ ScriptsOnlyBuild:
     className: Physics2DRaycaster
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WorkGameObject
+  - hash:
+      serializedVersion: 2
       Hash: a64b8ff703a69f3352c424e9d0bc1c49
     assemblyName: Unity.RenderPipelines.Core.Runtime.dll
     namespaceName: UnityEngine.Rendering
@@ -730,13 +757,13 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerButton
   - hash:
       serializedVersion: 2
-      Hash: 4556de8eb0fe2bb3bd575e325ad1dc5c
+      Hash: fb92af85b292cd6275d00450c89a16f4
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: SpawnClient
   - hash:
       serializedVersion: 2
-      Hash: 79068432e8431028be7a1e8a4c0964f0
+      Hash: e4a74f499e08bc39fdf0aab231ffb8bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Head
@@ -748,7 +775,7 @@ ScriptsOnlyBuild:
     className: TextMeshProUGUI
   - hash:
       serializedVersion: 2
-      Hash: 46aa6d334dfd1c0981f1f5e4e78e0237
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Player
@@ -766,6 +793,12 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerVector2
   - hash:
       serializedVersion: 2
+      Hash: a58f1648dd44768cfbf88ee241a54225
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Shop
+  - hash:
+      serializedVersion: 2
       Hash: 88cc9df3c6fc697bfbeacd24c0d6f2d7
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
@@ -778,7 +811,7 @@ ScriptsOnlyBuild:
     className: DebugUIHandlerValue
   - hash:
       serializedVersion: 2
-      Hash: 5be625d2481aa2b9768bb8c5e234df19
+      Hash: a9010b6f05622f95f7fd5d95060eb712
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Company
@@ -860,6 +893,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Outline
+  - hash:
+      serializedVersion: 2
+      Hash: 9b435a5803c9ba88032691ab5579e267
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Position
   - hash:
       serializedVersion: 2
       Hash: 134322c9293c1896357cce271b819ce4

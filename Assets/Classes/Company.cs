@@ -1,46 +1,50 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Company : MonoBehaviour
 {
-    public int Money { get; set; } = 240;
-    public int Reputation { get; set; } = 0;
-    public int ReputationMax { get { return ReputationLevel * 60; } set { } }
-    public int ReputationLevel { get; set; } = 1;
-    public GameObject Boxes;
-    public List<GameObject> rooms;
-    private int roomFull = 0;
-
+    public CompanyData companyData;
+   
+    public int ReputationMax { get { return companyData.reputationLevel * 60; } set { } }
+    
+    public GameObject warningPrefab;
+    public GameObject boxesPrefab;
+    public GameObject moneyPrefab;
+    [HideInInspector] public List<GameObject> rooms;
+    private int RoomFull { get; set; } = 0;
+    public SoundManager soundManager;
     public Head head;
     //  public int RoomsCount = 1;
 
-    public GameObject Player;
+    public GameObject playerPrefab;
+    [HideInInspector] public GameObject player;
     public GameObject[] workersPrefab;
-    [HideInInspector] public List<List<GameObject>> workers = new List<List<GameObject>>();
-    public List<GameObject> Documents;
+    [HideInInspector] public Dictionary<int, GameObject> workers = new Dictionary<int, GameObject>();
+    public List<Sprite> documents;
 
-
-    public int CountWorker { get; set; } = 0;
-
-
+    static public string path;
     public void RepLevelUP()
     {
-        if (Reputation >= ReputationMax)
+        if (companyData.reputation >= ReputationMax)
         {
-            Reputation = 0;
-            ReputationLevel++;
-            RoomSell();
+            companyData.reputation = 0;
+            companyData.reputationLevel++;
+            if (companyData.reputationLevel < 13)
+                RoomSell();
+            else
+                Debug.Log("You WIN!");
         }
     }
 
     public void RoomSell()
     {
-        GameObject room = GameObject.Find("Room" + ReputationLevel);
-        room.GetComponent<Room>().price = 200 * ReputationLevel;
+        GameObject room = GameObject.Find("Room" + companyData.reputationLevel);
+        room.GetComponent<Room>().price = 200 * companyData.reputationLevel;
         room.AddComponent<BoxCollider2D>();
         room.GetComponent<BoxCollider2D>().size = room.GetComponent<RectTransform>().sizeDelta;
 
-        WorkGameObject.CreateObject(Boxes, new Vector3(0, -70, 0),room.transform, 1, 1, 1);
+        WorkGameObject.CreateObject(boxesPrefab, new Vector3(0, -70, 0),room.transform, 1, 1, 1);
 
     }
 
@@ -54,23 +58,37 @@ public class Company : MonoBehaviour
 
     private void Start()
     {
-        RoomSell();
+        path = Path.Combine(Application.dataPath, "Save.json");
+      //  companyData = Load.LoadingJSON<CompanyData>();
+        if (companyData == null)
+            companyData = new CompanyData();
+        //RoomSell();   
+        GameObject.Find("Room1").GetComponent<Room>().BuyRoom();
     }
 
+    private void OnApplicationQuit()
+    {
+        Save.SaveFileJSON(companyData);
+    }
+
+    
     public void AddRoom(string name)
     {
         rooms.Add(GameObject.Find(name));
+        if (workers[0] == null)
+        {
+            workers[0] = WorkGameObject.CreateObject(playerPrefab, rooms[0].GetComponent<Room>()._tables[0].GetComponent<Position>().positionHuman,
+                rooms[0].transform, 84, 87, 1);
+            workers[0].transform.Find("Worker").GetComponent<Player>().Table = rooms[0].GetComponent<Room>()._tables[0];
+            companyData.CountWorker++;
+            player = workers[0].transform.Find("Worker").gameObject;
+            head.GetComponent<Head>().player = workers[0].transform.Find("Worker").GetComponent<Player>();
+            companyData.workers.Add(player.GetComponent<Player>().data);
+
+        }
         Destroy(rooms[rooms.Count - 1].GetComponent<BoxCollider2D>());
         SpawnClient spawn = rooms[rooms.Count - 1].GetComponent<SpawnClient>();
-        spawn.flagSpawn = true; 
-        if (workers[0].Count == 0)
-        {
-            workers[0].Add(WorkGameObject.CreateObject(Player, rooms[0].GetComponent<Room>().Table[0].GetComponent<Position>().positionHuman,
-                rooms[0].transform, 84, 87, 1));
-            workers[0][0].GetComponent<Player>().Table = rooms[0].GetComponent<Room>().Table[0];
-            CountWorker++;
-            head.GetComponent<Head>().player = workers[0][0].GetComponent<Player>();
-        }
+        spawn.flagSpawn = true;        
            
     }
 
@@ -78,63 +96,52 @@ public class Company : MonoBehaviour
     public void Click()
     {
         if(workers.Count!=0)
-        if (workers[0].Count != 0)
-            workers[0][0].GetComponent<Player>().DoWork();
+        if (workers.Count != 0)
+            player.GetComponent<Player>().DoWork();
     }
 
-    public void HireWorker()
+    public void HireWorker(int buy)
     {
-      if(roomFull<rooms.Count)
+      if(RoomFull < rooms.Count)
       {
 
-            if(CountWorker < workers.Count)
+            if(companyData.CountWorker < workers.Count)
             {
-                if(workers[CountWorker].Count == 0)
-                {
-                    GameObject table = rooms[roomFull].GetComponent<Room>().Table[CountWorker % 2];
+                    companyData.money -= buy; 
+                    GameObject table = rooms[RoomFull].GetComponent<Room>()._tables[companyData.CountWorker % 2];
                     
                     Vector3 position = table.GetComponent<Position>().positionHuman; 
-                    workers[CountWorker].Add(WorkGameObject.CreateObject(workersPrefab, position, rooms[roomFull].transform, 84, 87, 1));
-                    workers[CountWorker][0].GetComponent<Worker>().Table = table;
+                    workers[companyData.CountWorker] = WorkGameObject.CreateObject(workersPrefab, position, rooms[RoomFull].transform, 84, 87, 1);
+                    GameObject worker = workers[companyData.CountWorker].transform.Find("Worker").gameObject;
+                    worker.GetComponent<Worker>().Table = table;
                     if (table.GetComponent<SpriteRenderer>().flipX)
                     {
-                        workers[CountWorker][0].GetComponent<SpriteRenderer>().flipX = true;
+                        worker.GetComponent<SpriteRenderer>().flipX = true;
                         position.x = -position.x;
-                        workers[CountWorker][0].transform.localPosition = position;
+                        workers[companyData.CountWorker].transform.localPosition = position;
                     }
-                    CountWorker++;
-                    if (CountWorker % 2 == 0)
-                        roomFull++;
-                }
+                    companyData.CountWorker++;
+                    if (companyData.CountWorker % 2 == 0)
+                        RoomFull++;                
             }
       }
     }
 
 
-    public void LoadData(Save save)
+    [System.Serializable]
+    public class CompanyData
     {
-        Money = save.money;
-        Reputation = save.reputation;
-        ReputationMax = save.ReputationMax;
-        ReputationLevel = save.ReputationLevel;
+        public int money=0;
+        public int reputation;
+        public int reputationLevel = 1;
+        public int roomsCount;
 
-        if(save.RoomsOwned!=null)
-        foreach (var item in save.RoomsOwned)
-            AddRoom(item);
+        public List<Human.Data> workers = new List<Human.Data>();
+        //public List<List<Document>> documents;
 
-        for (int i = 2; i <= save.ReputationLevel; i++)
-            if (rooms.Count > i - 2)
-                if (rooms[i - 2].name.Replace("Room", "") != i.ToString())
-                    RoomSell(i);
-
-        //получение документов работникам
-        for (int j = 0; j < workers.Count; j++)
-            if(workers[j].Count!=0)
-            for (int i = 0; i < save.documents[j].Count; i++)
-            {
-                workers[j][0].GetComponent<Human>().AcceptedJob(save.documents[j][i].NumbDocument);
-                workers[j][0].GetComponent<Human>().documents[i].GetComponent<Document>().Enumerator=save.documents[j][i].Enumirator;
-            }                    
+        public int CountWorker { get; set; } = 0;
 
     }
+
+   
 }

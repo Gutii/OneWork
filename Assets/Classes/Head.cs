@@ -6,21 +6,20 @@ public class Head : MonoBehaviour
     private Company company;
     [HideInInspector] public Player player;
 
-    [SerializeField] private Text CountWorker;
-    [SerializeField] private Text MoneyHead;
-    [SerializeField] private Text LevelReputation;
+    [SerializeField] private Text countWorker;
+    [SerializeField] private Text moneyHead;
+    [SerializeField] private Text levelReputation;
 
-    [SerializeField] private Slider SliderReputation;
-    [SerializeField] private Text ChengSliderRep;
+    [SerializeField] private Slider sliderReputation;
+    [SerializeField] private Text chengSliderRep;
 
-    [SerializeField] private Slider CompletWork;
-    [SerializeField] private Text ChengSliderWork;
+    [SerializeField] private Slider completWork;
+    [SerializeField] private Text chengSliderWork;
 
 
     private void Start()
     {
         company = GameObject.FindObjectOfType<Company>();
-       // player = GameObject.FindObjectOfType<Player>();
     }
 
     private void FixedUpdate()
@@ -28,17 +27,17 @@ public class Head : MonoBehaviour
         try
         {
         company.RepLevelUP();
-        MoneyHead.text = company.Money.ToString();
-        CountWorker.text = company.CountWorker.ToString();
-        SliderUpdate(SliderReputation, ChengSliderRep, company.Reputation, company.ReputationMax);
+        moneyHead.text = company.companyData.money.ToString();
+        countWorker.text = company.companyData.CountWorker.ToString();
+        SliderUpdate(sliderReputation, chengSliderRep, company.companyData.reputation, company.ReputationMax);
             if(player!=null)
-        if (player.documents.Count != 0)
-            if (player.documents.Count != 0)
-                SliderUpdate(CompletWork, ChengSliderWork, player.documents[player.documents.Count - 1].GetComponent<Document>().Enumerator, player.documents[player.documents.Count - 1].GetComponent<Document>().Work);
+        if (player.Documents.Count != 0)
+            if (player.Documents.Count != 0)
+                SliderUpdate(completWork, chengSliderWork, player.Documents[player.Documents.Count - 1].GetComponent<Document>().Enumerator, player.Documents[player.Documents.Count - 1].GetComponent<Document>().Work);
             else
-                SliderUpdate(CompletWork, ChengSliderWork, 0, 0);
+                SliderUpdate(completWork, chengSliderWork, 0, 0);
         else
-            SliderUpdate(CompletWork, ChengSliderWork, 0, 0);
+            SliderUpdate(completWork, chengSliderWork, 0, 0);
 
         }
         catch(System.Exception ex)

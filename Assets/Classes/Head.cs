@@ -7,7 +7,7 @@ public class Head : MonoBehaviour
     [HideInInspector] public Player player;
 
     [SerializeField] private Text countWorker;
-    [SerializeField] private Text moneyHead;
+    [SerializeField] private Text MoneyHead;
     [SerializeField] private Text levelReputation;
 
     [SerializeField] private Slider sliderReputation;
@@ -27,17 +27,14 @@ public class Head : MonoBehaviour
         try
         {
         company.RepLevelUP();
-        moneyHead.text = company.companyData.money.ToString();
+        MoneyHead.text = company.companyData.Money.ToString();
         countWorker.text = company.companyData.CountWorker.ToString();
-        SliderUpdate(sliderReputation, chengSliderRep, company.companyData.reputation, company.ReputationMax);
+        SliderUpdate(sliderReputation, chengSliderRep, company.companyData.Reputation, company.ReputationMax);
             if(player!=null)
-        if (player.Documents.Count != 0)
-            if (player.Documents.Count != 0)
-                SliderUpdate(completWork, chengSliderWork, player.Documents[player.Documents.Count - 1].GetComponent<Document>().Enumerator, player.Documents[player.Documents.Count - 1].GetComponent<Document>().Work);
+            if (player.data.documents.Count != 0)
+                SliderUpdate(completWork, chengSliderWork, player.data.documents[player.Documents.Count - 1].Enumerator, player.data.documents[player.Documents.Count - 1].work);
             else
                 SliderUpdate(completWork, chengSliderWork, 0, 0);
-        else
-            SliderUpdate(completWork, chengSliderWork, 0, 0);
 
         }
         catch(System.Exception ex)

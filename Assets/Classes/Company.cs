@@ -2,22 +2,23 @@
 using System.IO;
 using UnityEngine;
 
+using System;
+
 public class Company : MonoBehaviour
 {
     public CompanyData companyData;
    
-    public int ReputationMax { get { return companyData.reputationLevel * 60; } set { } }
+    public int ReputationMax { get { return companyData.ReputationLevel * 60; } set { } }
     
     public GameObject warningPrefab;
     public GameObject boxesPrefab;
-    public GameObject moneyPrefab;
+    public GameObject MoneyPrefab;
     [HideInInspector] public List<GameObject> rooms;
     private int RoomFull { get; set; } = 0;
     public SoundManager soundManager;
     public Head head;
     //  public int RoomsCount = 1;
 
-    public GameObject playerPrefab;
     [HideInInspector] public GameObject player;
     public GameObject[] workersPrefab;
     [HideInInspector] public Dictionary<int, GameObject> workers = new Dictionary<int, GameObject>();
@@ -26,11 +27,11 @@ public class Company : MonoBehaviour
     static public string path;
     public void RepLevelUP()
     {
-        if (companyData.reputation >= ReputationMax)
+        if (companyData.Reputation >= ReputationMax)
         {
-            companyData.reputation = 0;
-            companyData.reputationLevel++;
-            if (companyData.reputationLevel < 13)
+            companyData.Reputation = 0;
+            companyData.ReputationLevel++;
+            if (companyData.ReputationLevel < 13)
                 RoomSell();
             else
                 Debug.Log("You WIN!");
@@ -39,8 +40,8 @@ public class Company : MonoBehaviour
 
     public void RoomSell()
     {
-        GameObject room = GameObject.Find("Room" + companyData.reputationLevel);
-        room.GetComponent<Room>().price = 200 * companyData.reputationLevel;
+        GameObject room = GameObject.Find("Room" + companyData.ReputationLevel);
+        room.GetComponent<Room>().price = 200 * companyData.ReputationLevel;
         room.AddComponent<BoxCollider2D>();
         room.GetComponent<BoxCollider2D>().size = room.GetComponent<RectTransform>().sizeDelta;
 
@@ -48,10 +49,10 @@ public class Company : MonoBehaviour
 
     }
 
-    public void RoomSell(int reputationlevel)
+    public void RoomSell(int Reputationlevel)
     {
-        GameObject room = GameObject.Find("Room" + reputationlevel);
-        room.GetComponent<Room>().price = 200 * reputationlevel;
+        GameObject room = GameObject.Find("Room" + Reputationlevel);
+        room.GetComponent<Room>().price = 200 * Reputationlevel;
         room.AddComponent<BoxCollider2D>();
         room.GetComponent<BoxCollider2D>().size = room.GetComponent<RectTransform>().sizeDelta;
     }
@@ -59,32 +60,38 @@ public class Company : MonoBehaviour
     private void Start()
     {
         path = Path.Combine(Application.dataPath, "Save.json");
-      //  companyData = Load.LoadingJSON<CompanyData>();
+        companyData = Load.LoadingJSON<CompanyData>(); // не готово
         if (companyData == null)
+        {
             companyData = new CompanyData();
-        //RoomSell();   
-        GameObject.Find("Room1").GetComponent<Room>().BuyRoom();
+            GameObject.Find("Room1").GetComponent<Room>().BuyRoom();
+        }
+        else
+        {
+
+        }
+        
     }
 
     private void OnApplicationQuit()
     {
-        Save.SaveFileJSON(companyData);
+      //  Save.SaveFileJSON(companyData);
     }
 
     
-    public void AddRoom(string name)
+    public void RoomAdd(string name)
     {
-        rooms.Add(GameObject.Find(name));
+        rooms.Add(GameObject.Find(name));        
+        companyData.rooms.Add(rooms[rooms.Count-1].GetComponent<Room>().data);
         if (workers[0] == null)
         {
-            workers[0] = WorkGameObject.CreateObject(playerPrefab, rooms[0].GetComponent<Room>()._tables[0].GetComponent<Position>().positionHuman,
+            workers[0] = WorkGameObject.CreateObject(workersPrefab[0], rooms[0].GetComponent<Room>()._tables[0].GetComponent<Position>().positionHuman,
                 rooms[0].transform, 84, 87, 1);
             workers[0].transform.Find("Worker").GetComponent<Player>().Table = rooms[0].GetComponent<Room>()._tables[0];
             companyData.CountWorker++;
             player = workers[0].transform.Find("Worker").gameObject;
             head.GetComponent<Head>().player = workers[0].transform.Find("Worker").GetComponent<Player>();
-            companyData.workers.Add(player.GetComponent<Player>().data);
-
+            companyData.rooms[0].worker.Add(player.GetComponent<Player>().data);
         }
         Destroy(rooms[rooms.Count - 1].GetComponent<BoxCollider2D>());
         SpawnClient spawn = rooms[rooms.Count - 1].GetComponent<SpawnClient>();
@@ -107,13 +114,15 @@ public class Company : MonoBehaviour
 
             if(companyData.CountWorker < workers.Count)
             {
-                    companyData.money -= buy; 
+                    companyData.Money -= buy; 
                     GameObject table = rooms[RoomFull].GetComponent<Room>()._tables[companyData.CountWorker % 2];
                     
                     Vector3 position = table.GetComponent<Position>().positionHuman; 
                     workers[companyData.CountWorker] = WorkGameObject.CreateObject(workersPrefab, position, rooms[RoomFull].transform, 84, 87, 1);
                     GameObject worker = workers[companyData.CountWorker].transform.Find("Worker").gameObject;
+                    worker.GetComponent<Worker>().data.id = int.Parse(worker.name.Replace("(Clone)","").Replace("Worker", ""));
                     worker.GetComponent<Worker>().Table = table;
+                    companyData.rooms[RoomFull].worker.Add(worker.GetComponent<Worker>().data);
                     if (table.GetComponent<SpriteRenderer>().flipX)
                     {
                         worker.GetComponent<SpriteRenderer>().flipX = true;
@@ -131,17 +140,21 @@ public class Company : MonoBehaviour
     [System.Serializable]
     public class CompanyData
     {
-        public int money=0;
-        public int reputation;
-        public int reputationLevel = 1;
-        public int roomsCount;
+        public int Money { get; set; } = 0;
+        public int Reputation { get; set; } = 0;
+        public int ReputationLevel { get; set; } = 1;
 
-        public List<Human.Data> workers = new List<Human.Data>();
-        //public List<List<Document>> documents;
-
+        public List<Room.Data> rooms = new List<Room.Data>();
         public int CountWorker { get; set; } = 0;
 
     }
 
+    public void CompanyLoadData()
+    {
+        foreach(Room.Data room in companyData.rooms)
+        {
+            GameObject.Find(room.name).GetComponent<Room>().LoadRoom(room);
+        }
+    }
    
 }

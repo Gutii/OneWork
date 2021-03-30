@@ -45,7 +45,7 @@ public class Shop : MonoBehaviour
         if (company.workers.Count != 0)
             player = company.workers[0].transform.Find("Worker").GetComponent<Player>();        
         if (player != null)
-            PanelOptions(0, (player.Efficiency * 50).ToString(), (player.Efficiency).ToString());
+            PanelOptions(0, (player.data.Efficiency * 50).ToString(), (player.data.Efficiency).ToString());
         PanelOptions(1, (company.companyData.CountWorker * 250).ToString(), (company.companyData.CountWorker).ToString());
     }
 
@@ -65,7 +65,7 @@ public class Shop : MonoBehaviour
 
     public bool EnougMoney(int Price)
     {
-        if(Price>company.companyData.money)
+        if(Price>company.companyData.Money)
         return true;
         else
         return false;
@@ -87,8 +87,8 @@ public class Shop : MonoBehaviour
             {
             for(int i=1; i < company.workers.Count;i++)
                     if(company.workers[i] != null)
-                        company.workers[i].transform.Find("Worker").GetComponent<Worker>().Efficiency++;
-            company.companyData.money -= int.Parse(panelObjects[0].textPrice.GetComponent<Text>().text);
+                        company.workers[i].transform.Find("Worker").GetComponent<Worker>().data.Efficiency++;
+            company.companyData.Money -= int.Parse(panelObjects[0].textPrice.GetComponent<Text>().text);
             LoadPrice();
             }
     }
@@ -99,8 +99,8 @@ public class Shop : MonoBehaviour
         if (company.workers.Count != 0)
             if (Buy(0))
             {
-            company.player.GetComponent<Player>().Efficiency++;
-            company.companyData.money -= int.Parse(panelObjects[0].textPrice.GetComponent<Text>().text);
+            company.player.GetComponent<Player>().data.Efficiency++;
+            company.companyData.Money -= int.Parse(panelObjects[0].textPrice.GetComponent<Text>().text);
             LoadPrice();
             }
     }

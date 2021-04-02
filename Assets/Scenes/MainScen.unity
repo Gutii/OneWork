@@ -306,6 +306,7 @@ MonoBehaviour:
     rooms: []
   warningPrefab: {fileID: 9111993359232625467, guid: 31bfc10fbce740644891df176065b7eb, type: 3}
   boxesPrefab: {fileID: 2381891932682138709, guid: 2bdf3fc1acfb6ee489b2e3e60917a029, type: 3}
+<<<<<<< HEAD
   MoneyPrefab: {fileID: 1247422004075264181, guid: 4964776a16bf2eb4c86351e66906b5cc, type: 3}
   rooms: []
   soundManager: {fileID: 79522692}
@@ -313,6 +314,15 @@ MonoBehaviour:
   player: {fileID: 0}
   workersPrefab:
   - {fileID: 601513344343664337, guid: 837d847329d293745b9ed1b23abd4321, type: 3}
+=======
+  MoneyPrefab: {fileID: 0}
+  rooms: []
+  soundManager: {fileID: 79522692}
+  head: {fileID: 233160921}
+  playerPrefab: {fileID: 601513344343664337, guid: 837d847329d293745b9ed1b23abd4321, type: 3}
+  player: {fileID: 0}
+  workersPrefab:
+>>>>>>> 959ee00114b4e433844b42863f5de586d10315d5
   - {fileID: 7880649253655699751, guid: 03388d9d778959e43bb68bea83b54994, type: 3}
   documents:
   - {fileID: -6089097470041444721, guid: e03fe4f113f1a7048b966cbd428d2210, type: 3}

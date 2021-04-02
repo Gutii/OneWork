@@ -650,6 +650,7 @@ D:\GitHUB\getConsole\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 D:\GitHUB\getConsole\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 D:\GitHUB\getConsole\obj\Debug\Assembly-CSharp.dll
 D:\GitHUB\getConsole\obj\Debug\Assembly-CSharp.pdb
+<<<<<<< HEAD
 E:\github\OneWork-master\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
 E:\github\OneWork-master\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 E:\github\OneWork-master\obj\Debug\Assembly-CSharp.dll
@@ -976,3 +977,5 @@ E:\github\OneWork-master\Temp\bin\Debug\UnityEngine.TestRunner.pdb
 E:\github\OneWork-master\Temp\bin\Debug\UnityEditor.TestRunner.pdb
 E:\github\OneWork-master\Temp\bin\Debug\Unity.ShaderGraph.Utilities.pdb
 E:\github\OneWork-master\obj\Debug\Assembly-CSharp.csproj.CopyComplete
+=======
+>>>>>>> 959ee00114b4e433844b42863f5de586d10315d5

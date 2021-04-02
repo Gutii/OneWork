@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 Base path: 'C:/Program Files/Unity/Editor/Data', plugins path 'C:/Program Files/Unity/Editor/Data/PlaybackEngines'
+=======
+Base path: 'D:/Софт/Unity/Editor/Data', plugins path 'D:/Софт/Unity/Editor/Data/PlaybackEngines'
+>>>>>>> 959ee00114b4e433844b42863f5de586d10315d5
 Cmd: initializeCompiler

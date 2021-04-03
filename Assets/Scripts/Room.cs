@@ -56,28 +56,35 @@ public class Room : MonoBehaviour
         if (company.companyData.Money >= price)
         {
             company.companyData.Money -= price;
-
             DestroyChildren(gameObject);
             Destroy(GetComponent<BoxCollider2D>());
-            CreateRoom();
+            CreateRoom(false);
             data.name = name;
             company.companyData.rooms.Add(company.rooms[company.rooms.Count - 1].GetComponent<Room>().data);
         }
     }
 
 
-    public void CreateRoom()
+    public void CreateRoom(bool load)
     {
         _tables = new GameObject[2];
         for (int i = 0; i < 2; i++)
         {
             company.workers.Add(company.workers.Count, null);
-            _tables[i] = i == 0 ? WorkGameObject.CreateObject(tables, new Vector3(103, -70, -1), transform, 83, 91) :
-                WorkGameObject.CreateObject(tables, new Vector3(-103, -70, -1), transform, 83, 91);
-            data.TableSpriteNumber.Add(int.Parse(_tables[i].name.Replace("Table", "").Replace("(Clone)", "")));
+            if (load)
+            {
+                _tables[i] = i == 0 ? WorkGameObject.CreateObject(tables[data.TableSpriteNumber[i]-1], new Vector3(103, -70, -1), transform, 83, 91) :
+                 WorkGameObject.CreateObject(tables[data.TableSpriteNumber[i]-1], new Vector3(-103, -70, -1), transform, 83, 91);
+            }
+            else
+            {
+                _tables[i] = i == 0 ? WorkGameObject.CreateObject(tables, new Vector3(103, -70, -1), transform, 83, 91) :
+                  WorkGameObject.CreateObject(tables, new Vector3(-103, -70, -1), transform, 83, 91);
+                data.TableSpriteNumber.Add(int.Parse(_tables[i].name.Replace("Table", "").Replace("(Clone)", "")));
+            }
         }
 
-        _tables[1].GetComponent<SpriteRenderer>().flipX = true;        
+        _tables[1].GetComponent<SpriteRenderer>().flipX = true;
         company.RoomAdd(name);
     }
 
@@ -102,9 +109,9 @@ public class Room : MonoBehaviour
     }
 
     public void LoadRoom(Data data)
-    {
-        CreateRoom();
-
+    { 
+        this.data = data;
+        CreateRoom(true);        
         int j = 0;
 
         foreach(Human.Data humen in data.worker)
@@ -124,7 +131,7 @@ public class Room : MonoBehaviour
                 position.x = -position.x;
                 worker.transform.localPosition = position;
             }
-
+            _worker.data = humen;
             foreach (Document document in humen.documents)
             {
                 _worker.AcceptedJob(document,false);

@@ -20,15 +20,19 @@ public abstract class Human : MonoBehaviour
     }
 
 
-    public virtual void AcceptedJob(Document Document, bool sound)
+    public virtual void AcceptedJob(Document Document, bool load)
     {
         GameObject document = new GameObject();
         document.AddComponent<SpriteRenderer>();
         document.GetComponent<SpriteRenderer>().sprite = Company.documents[0];
-        Documents.Add(document);
-        data.documents.Add(Document);
-        if(sound)
-        Company.soundManager.PlaySound(SoundManager.SoundEnum.AcceptJob, gameObject);
+        Documents.Add(document);   
+        
+        if(load)
+        {
+            Company.soundManager.PlaySound(SoundManager.SoundEnum.AcceptJob, gameObject);
+            data.documents.Add(Document);
+        }
+        
         GameObject currentdocument = Documents[Documents.Count - 1];
         currentdocument.transform.SetParent(Table.transform);       
         Documents[Documents.Count-1] = WorkGameObject.DocumentTransform(Documents, Table.GetComponent<Position>().DocumentPosition(), gameObject.GetComponent<SpriteRenderer>().flipX);
@@ -45,8 +49,8 @@ public abstract class Human : MonoBehaviour
 
                     var documentObject = Documents[Documents.Count - 1];
                     var document = data.documents[data.documents.Count - 1];
-                    document.Enumerator += data.Efficiency;
-                    if (document.work <= document.Enumerator)
+                    document.enumerator += data.Efficiency;
+                    if (document.work <= document.enumerator)
                     {
                         if (System.Int64.Parse((Company.companyData.Money ).ToString()) + document._money > int.MaxValue)
                             Company.companyData.Money = int.MaxValue;
@@ -76,6 +80,5 @@ public abstract class Human : MonoBehaviour
             Debug.Log("DoWork overflow: " + e.ToString());            
         }
     }
-
    
 }

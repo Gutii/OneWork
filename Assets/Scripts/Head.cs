@@ -29,12 +29,12 @@ public class Head : MonoBehaviour
         company.RepLevelUP();
         MoneyHead.text = company.companyData.Money.ToString();
         countWorker.text = company.CountWorker.ToString();
-            if (player != null)
+            if (company.player != null)
             {
                 player = company.player.GetComponent<Player>();
                 SliderUpdate(sliderReputation, chengSliderRep, company.companyData.Reputation, company.ReputationMax);
                 if (player.data.documents.Count != 0)
-                    SliderUpdate(completWork, chengSliderWork, player.data.documents[player.Documents.Count - 1].Enumerator, player.data.documents[player.Documents.Count - 1].work);
+                    SliderUpdate(completWork, chengSliderWork, player.data.documents[player.Documents.Count - 1].enumerator, player.data.documents[player.Documents.Count - 1].work);
                 else
                     SliderUpdate(completWork, chengSliderWork, 0, 0);
             }

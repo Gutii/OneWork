@@ -4,8 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class Document
 {
-    public int Sprite { get; set; }
-    public int Enumerator { get; set; } = 0;
+    public int sprite;
+    public int enumerator = 0;
     public int _money;
     public int _reputation;
     public int work;
@@ -19,8 +19,8 @@ public class Document
 
     public void GetDocument(Document document)
     {
-        Sprite = document.Sprite;
-        Enumerator = document.Enumerator;
+        sprite = document.sprite;
+        enumerator = document.enumerator;
         _money = document._money;
         _reputation = document._reputation;
         work = document.work;
